@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["5L8Y7BS832.com.lamisaexplicada.app"],
+        "components": [
+          { "/": "/art/*", "comment": "Artículo: /art/{id}?t=&occ=" },
+          { "/": "/grupo/*", "comment": "Grupo: /grupo/{id}?t=&occ=" },
+          { "/": "/sm/*", "comment": "Sección Master: /sm/{id}" }
+        ]
+      }
+    ]
+  }
+}
