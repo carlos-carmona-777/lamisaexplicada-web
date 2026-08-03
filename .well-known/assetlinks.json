@@ -1,10 +1,14 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
     "target": {
       "namespace": "android_app",
-      "package_name": "TODO_APPLICATION_ID_ANDROID",
-      "sha256_cert_fingerprints": ["TODO_SHA256_DEL_KEYSTORE_DE_RELEASE"]
+      "package_name": "com.lamisaexplicada.app",
+      "sha256_cert_fingerprints": [
+        "54:AA:BD:80:D0:6C:92:83:B8:09:66:D5:41:0E:FE:11:09:E3:A2:58:11:87:70:CF:F7:CF:52:E1:36:C8:7F:34"
+      ]
     }
   }
 ]
