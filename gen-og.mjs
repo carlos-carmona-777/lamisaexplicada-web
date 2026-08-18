@@ -136,6 +136,10 @@ const page = ({ kind, id, title, desc }, hasOwnImage) => `<!DOCTYPE html>
       padding: 24px; text-align: center;
     }
     .card { max-width: 420px; }
+    .hero {
+      width: 100%; aspect-ratio: 2 / 1; object-fit: cover;
+      border-radius: 14px; margin-bottom: 22px; display: block;
+    }
     .eyebrow {
       font-family: -apple-system, system-ui, sans-serif; font-size: 11px;
       letter-spacing: .18em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
@@ -153,7 +157,7 @@ const page = ({ kind, id, title, desc }, hasOwnImage) => `<!DOCTYPE html>
 </head>
 <body>
   <div class="card">
-    <div class="eyebrow">La Misa Explicada</div>
+${hasOwnImage ? `    <img class="hero" src="og.jpg" alt="">\n` : ""}    <div class="eyebrow">La Misa Explicada</div>
     <h1>${esc(title)}</h1>
     <div class="rule"></div>
     <p>Este contenido vive en la app. Si ya tienes <strong>La Misa Explicada</strong> instalada, el enlace se abre directo en la app; si no, instálala para verlo.</p>
