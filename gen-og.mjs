@@ -18,7 +18,8 @@
 // GitHub Pages sirve /art/<id>/index.html para /art/<id>; cualquier id que
 // no tenga página cae al 404.html genérico (que también trae OG de marca).
 
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -26,6 +27,9 @@ const root = dirname(fileURLToPath(import.meta.url));
 const bundlePath =
   process.argv[2] ??
   join(root, "../LaMisaExplicada/LaMisaExplicada/Resources/content_bundle.json");
+// Las imágenes del contenido viven junto al bundle (`Resources/Images/`) --
+// mismo layout que empaca la app iOS.
+const imagesDir = join(dirname(bundlePath), "Images");
 
 const bundle = JSON.parse(readFileSync(bundlePath, "utf8"));
 
@@ -39,19 +43,27 @@ const esc = (s) =>
 const DEFAULT_DESC =
   "Conoce la belleza y verdad de la Liturgia Católica en La Misa Explicada.";
 
-// (kind, id) -> { title, desc }
+// (kind, id) -> { title, desc, image }
 const pages = new Map();
-const add = (kind, id, title, desc) => {
+const add = (kind, id, title, desc, image) => {
   if (!id || !title) return;
-  pages.set(`${kind}/${id}`, { kind, id, title, desc: desc || DEFAULT_DESC });
+  pages.set(`${kind}/${id}`, {
+    kind,
+    id,
+    title,
+    desc: desc || DEFAULT_DESC,
+    image: image || null,
+  });
 };
 
 const walk = (nodes) => {
   for (const node of nodes ?? []) {
     if (node.pruebas === true) continue;
-    if (node.type === "article") add("art", node.id, node.title, node.subtitle);
+    if (node.type === "article") {
+      add("art", node.id, node.title, node.subtitle, node.image || node.cardImage);
+    }
     if (node.type === "section") {
-      add("grupo", node.id, node.title, node.subtitle);
+      add("grupo", node.id, node.title, node.subtitle, node.image || node.cardImage);
       walk(node.subsections);
     }
   }
@@ -60,11 +72,42 @@ const walk = (nodes) => {
 walk(bundle.sections);
 for (const sm of bundle.masterSections ?? []) {
   if (sm.pruebas === true || sm.oculta === true) continue;
-  add("sm", sm.id, sm.name, sm.homeCard?.subtitle);
+  add("sm", sm.id, sm.name, sm.homeCard?.subtitle, sm.homeCard?.image);
   walk(sm.sections);
 }
 
-const page = ({ kind, id, title, desc }) => `<!DOCTYPE html>
+// Redimensiona la imagen del destino a JPEG <=1200px de ancho (tarjeta
+// grande de WhatsApp/iMessage; su hero ~2:1 ya casi calza el 1.91:1 ideal)
+// con `sips` (viene con macOS). Devuelve true si dejó `<dir>/og.jpg`;
+// false (fallback al og-cover.png genérico) si la imagen no existe en
+// `Resources/Images/` -- p.ej. contenido nuevo por OTA aún no sincronizado
+// al repo de la app.
+const makeOgImage = (entry, dir) => {
+  if (!entry.image) return false;
+  const src = join(imagesDir, entry.image);
+  if (!existsSync(src)) {
+    console.warn(`  aviso: ${entry.kind}/${entry.id} referencia imagen inexistente "${entry.image}" -- usa portada genérica`);
+    return false;
+  }
+  const width = parseInt(
+    spawnSync("sips", ["-g", "pixelWidth", src], { encoding: "utf8" })
+      .stdout?.match(/pixelWidth: (\d+)/)?.[1] ?? "0",
+    10,
+  );
+  const args = width > 1200 ? ["--resampleWidth", "1200"] : [];
+  const result = spawnSync(
+    "sips",
+    [...args, "-s", "format", "jpeg", "-s", "formatOptions", "78", src, "--out", join(dir, "og.jpg")],
+    { encoding: "utf8" },
+  );
+  if (result.status !== 0) {
+    console.warn(`  aviso: sips falló con "${entry.image}" -- usa portada genérica`);
+    return false;
+  }
+  return true;
+};
+
+const page = ({ kind, id, title, desc }, hasOwnImage) => `<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -75,8 +118,8 @@ const page = ({ kind, id, title, desc }) => `<!DOCTYPE html>
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:url" content="https://app.lamisaexplicada.com/${kind}/${encodeURIComponent(id)}">
-  <meta property="og:image" content="https://app.lamisaexplicada.com/og-cover.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://app.lamisaexplicada.com/${hasOwnImage ? `${kind}/${encodeURIComponent(id)}/og.jpg` : "og-cover.png"}">
+  <meta name="twitter:card" content="${hasOwnImage ? "summary_large_image" : "summary"}">
   <meta name="description" content="${esc(desc)}">
   <style>
     :root {
@@ -125,10 +168,13 @@ const page = ({ kind, id, title, desc }) => `<!DOCTYPE html>
 for (const kind of ["art", "grupo", "sm"]) {
   rmSync(join(root, kind), { recursive: true, force: true });
 }
+let withImage = 0;
 for (const entry of pages.values()) {
   const dir = join(root, entry.kind, entry.id);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, "index.html"), page(entry));
+  const hasOwnImage = makeOgImage(entry, dir);
+  if (hasOwnImage) withImage += 1;
+  writeFileSync(join(dir, "index.html"), page(entry, hasOwnImage));
 }
 
-console.log(`Generadas ${pages.size} páginas OG desde ${bundlePath}`);
+console.log(`Generadas ${pages.size} páginas OG (${withImage} con imagen propia) desde ${bundlePath}`);

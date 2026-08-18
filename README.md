@@ -32,8 +32,15 @@ git add -A art grupo sm && git commit && git push
 ```
 
 Filtra `pruebas: true` y SMs `oculta: true` con el mismo criterio que las
-apps. `og-cover.png` es el ícono de la app a 600px (imagen de la vista
-previa, igual para todos los destinos).
+apps. Cada página lleva ADEMÁS su `og.jpg` propio: la imagen de cabecera
+del artículo/grupo/SM redimensionada a <=1200px con `sips` (por eso el
+script requiere macOS), leída de `Resources/Images/` junto al bundle.
+`og-cover.png` (ícono de la app a 600px) queda solo como fallback para
+destinos sin imagen o cuya imagen no esté en el repo de la app, y para
+`index.html`/`404.html`.
+
+OJO con el caché de WhatsApp: la vista previa de una URL ya compartida
+puede tardar días en refrescarse tras cambiar su `og:*`.
 
 ## Archivos
 
