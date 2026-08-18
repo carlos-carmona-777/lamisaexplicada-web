@@ -15,9 +15,25 @@ Espejo 1:1 del esquema interno `misa://`, sin prefijo (subdominio dedicado):
 - `https://app.lamisaexplicada.com/sm/{id}`
 
 Con la app instalada, iOS/Android abren el link directo en la app (sin tocar
-este servidor). Sin la app, GitHub Pages sirve `404.html` (= la landing
-"este contenido vive en la app") para cualquier path profundo, e
-`index.html` (misma landing) en la raíz.
+este servidor). Sin la app, GitHub Pages sirve la página estática generada
+`/{art|grupo|sm}/{id}/index.html` (con metadatos Open Graph del destino: los
+crawlers de WhatsApp/iMessage/Telegram muestran el TÍTULO del artículo en la
+vista previa), y `404.html` (landing genérica con OG de marca) para ids sin
+página; `index.html` (misma landing) en la raíz.
+
+## Páginas OG por destino (`gen-og.mjs`)
+
+Las carpetas `art/`, `grupo/` y `sm/` son GENERADAS — no editarlas a mano.
+Tras cambiar contenido en la app (títulos/subtítulos/artículos nuevos):
+
+```bash
+node gen-og.mjs   # lee ../LaMisaExplicada/.../Resources/content_bundle.json
+git add -A art grupo sm && git commit && git push
+```
+
+Filtra `pruebas: true` y SMs `oculta: true` con el mismo criterio que las
+apps. `og-cover.png` es el ícono de la app a 600px (imagen de la vista
+previa, igual para todos los destinos).
 
 ## Archivos
 
