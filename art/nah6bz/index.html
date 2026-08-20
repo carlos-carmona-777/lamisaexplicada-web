@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-itunes-app" content="app-id=6785691522, app-argument=https://app.lamisaexplicada.com/art/nah6bz">
   <title>Gestos — La Misa Explicada</title>
   <meta property="og:site_name" content="La Misa Explicada">
   <meta property="og:type" content="article">
@@ -44,6 +45,8 @@
       color: #fff; background: var(--accent); border-radius: 12px; text-decoration: none;
     }
     .note { margin-top: 16px; font-size: 12.5px; }
+    .cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+    .cta-row .cta { margin-top: 0; }
   </style>
 </head>
 <body>
@@ -53,9 +56,11 @@
     <h1>Gestos</h1>
     <div class="rule"></div>
     <p>Este contenido vive en la app. Si ya tienes <strong>La Misa Explicada</strong> instalada, el enlace se abre directo en la app; si no, instálala para verlo.</p>
-    <!-- TODO: al publicar en las tiendas, apuntar a la URL real de App Store / Play Store -->
-    <a class="cta" href="/">Descargar la app</a>
-    <p class="note">Muy pronto en App Store y Google Play.</p>
+    <div class="cta-row">
+      <a class="cta" href="https://apps.apple.com/app/id6785691522">App&nbsp;Store</a>
+      <a class="cta" href="https://play.google.com/store/apps/details?id=com.lamisaexplicada.app">Google&nbsp;Play</a>
+    </div>
+    <p class="note">Disponible para iPhone, iPad y Android.</p>
   </div>
 </body>
 </html>
