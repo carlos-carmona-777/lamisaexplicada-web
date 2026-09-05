@@ -49,7 +49,7 @@ puede tardar días en refrescarse tras cambiar su `og:*`.
 | `CNAME` | Dominio custom de GitHub Pages (`app.lamisaexplicada.com`) |
 | `.nojekyll` | Sin esto, Jekyll NO publica `.well-known/` (carpeta con punto) |
 | `.well-known/apple-app-site-association` | iOS: Team `5L8Y7BS832`, bundle `com.lamisaexplicada.app`, paths art/grupo/sm |
-| `.well-known/assetlinks.json` | Android (PENDIENTE: applicationId + SHA-256 del keystore de release — encargo #24 del chat Android) |
+| `.well-known/assetlinks.json` | Android: `com.lamisaexplicada.app` + 2 huellas SHA-256 (release + upload); el intent-filter `autoVerify` de `app.lamisaexplicada.com` vive en `AndroidManifest.xml` (encargo #24, hecho) |
 | `index.html` / `404.html` | Landing para quien no tiene la app (404 = fallback de paths profundos) |
 
 ## DNS (una sola vez, en el registrador del dominio)
