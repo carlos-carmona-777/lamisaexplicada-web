@@ -13,6 +13,10 @@ Espejo 1:1 del esquema interno `misa://`, sin prefijo (subdominio dedicado):
 - `https://app.lamisaexplicada.com/art/{id}[?t=Título&occ=N]`
 - `https://app.lamisaexplicada.com/grupo/{id}[?t=&occ=]`
 - `https://app.lamisaexplicada.com/sm/{id}`
+- `https://app.lamisaexplicada.com/pregunta/{id}` (Pregunta de la semana, «Retar a alguien»;
+  `/pregunta/` brinca a la de la semana en curso). Se contesta en la página; generada por
+  `gen-og.mjs` desde `weeklyQuestions` — regenerar al publicar preguntas nuevas. Aún NO está
+  en el AASA (se agrega cuando salga la versión de iOS que la abre).
 
 Con la app instalada, iOS/Android abren el link directo en la app (sin tocar
 este servidor). Sin la app, GitHub Pages sirve la página estática generada

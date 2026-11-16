@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-itunes-app" content="app-id=6785691522, app-argument=https://app.lamisaexplicada.com/pregunta/q09">
+  <title>Pregunta de la semana — La Misa Explicada</title>
+  <meta property="og:site_name" content="La Misa Explicada">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pregunta de la semana: ¿te animas?">
+  <meta property="og:description" content="¿Qué color puede usarse el III domingo de Adviento, llamado Gaudete?">
+  <meta property="og:url" content="https://app.lamisaexplicada.com/pregunta/q09">
+  <meta property="og:image" content="https://app.lamisaexplicada.com/og-cover.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="description" content="¿Qué color puede usarse el III domingo de Adviento, llamado Gaudete?">
+  <style>
+    :root { --bg: #F7F2E7; --ink: #1A1A18; --muted: #5C574C; --gold: #8A6A12; --accent: #8B1A1A; --soft: #F0E8E8;
+      --card: #FFFFFF; --line: #E2D8C2; --ok: #1F6A2E; --okbg: #E6F3E8; --bad: #A0221B; --badbg: #F8E4E2; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #171310; --ink: #EDE5D2; --muted: #A89878; --gold: #C9A94E; --accent: #D96C5F;
+      --soft: #332020; --card: #231F19; --line: #3D3931; --ok: #74C293; --okbg: #1E2C23; --bad: #F08A80; --badbg: #3A1F1C; } }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--ink); font-family: -apple-system, system-ui, sans-serif; padding: 22px 16px 40px; }
+    .card { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand img { width: 36px; height: 36px; border-radius: 8px; }
+    .brand b { display: block; font-size: 14px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .14em; color: var(--gold); text-transform: uppercase; }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-size: 26px; font-weight: 700; line-height: 1.18; }
+    .stmt { font-family: Georgia, serif; font-size: 21px; line-height: 1.35; }
+    .hint { font-size: 13px; color: var(--muted); }
+    .opts { display: flex; flex-direction: column; gap: 8px; }
+    .opts.grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .opt { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 10px 14px; border-radius: 12px;
+      border: 1.5px solid var(--line); background: var(--card); color: var(--ink); font: 500 16px -apple-system, system-ui, sans-serif; text-align: left; cursor: pointer; }
+    .opt:disabled { cursor: default; }
+    .opt .badge { width: 28px; height: 28px; border-radius: 14px; background: var(--soft); color: var(--accent); font-weight: 700; font-size: 13px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .opt .mark { margin-left: auto; font-size: 12px; font-weight: 700; }
+    .opt.ok { background: var(--okbg); border-color: var(--ok); } .opt.ok .mark { color: var(--ok); }
+    .opt.bad { background: var(--badbg); border-color: var(--bad); } .opt.bad .mark { color: var(--bad); }
+    .opt.img { flex-direction: column; align-items: stretch; padding: 6px; gap: 6px; position: relative; }
+    .opt.img img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; border-radius: 8px; display: block; }
+    .opt.img .badge { position: absolute; top: 10px; left: 10px; background: #fff; }
+    .opt.img .mark { margin: 0; text-align: center; }
+    .tpl { font-family: Georgia, serif; font-style: italic; font-size: 19px; line-height: 1.4; }
+    .scene { position: relative; } .scene img { width: 100%; border-radius: 12px; display: block; }
+    .scene span { position: absolute; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 15px; background: var(--accent);
+      color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; }
+    .verdict { font-family: Georgia, serif; font-size: 24px; font-weight: 700; }
+    .expl { background: var(--card); border-radius: 12px; padding: 12px 14px; font-family: Georgia, serif; font-size: 15px; line-height: 1.5; }
+    .expl small { display: block; margin-top: 6px; font-family: -apple-system, system-ui, sans-serif; font-size: 12px; color: var(--muted); }
+    .promo { background: #8B1A1A; color: #fff; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .promo h2 { font-family: Georgia, serif; font-size: 21px; line-height: 1.2; }
+    .promo p { font-size: 13.5px; line-height: 1.5; color: #F3DCDC; }
+    .cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .cta { display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 10px; background: #fff; color: #1A1A18;
+      font-weight: 700; font-size: 14px; text-decoration: none; }
+    #quiz, #result { display: flex; flex-direction: column; gap: 12px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">
+      <img src="/og-cover.png" alt="">
+      <div><b>La Misa Explicada</b><div class="eyebrow">Pregunta de la semana · 30 nov – 6 dic</div></div>
+    </div>
+    <h1>¿Qué color puede usarse el III domingo de Adviento, llamado Gaudete?</h1>
+    <div id="quiz">
+      <p class="hint" id="hint">Toca tu respuesta. Tienes un solo intento.</p>
+      <div id="opts" class="opts"></div>
+    </div>
+    <p class="hint" id="soon" hidden>Esta pregunta se abre el lunes. Mientras, descarga la app para no perdértela.</p>
+    <div id="result" hidden>
+      <p class="verdict" id="verdict"></p>
+      <div class="expl"><span id="expl"></span><small id="src"></small></div>
+    </div>
+    <section class="promo" id="promo" hidden>
+      <h2 id="promoTitle">Cada lunes, una pregunta nueva sobre la Misa</h2>
+      <p>Con La Misa Explicada aprendes el porqué de cada parte de la Misa, las lecturas del día y la Liturgia de las Horas. Gratis.</p>
+      <div class="cta-row">
+        <a class="cta" href="https://apps.apple.com/app/id6785691522">App&nbsp;Store</a>
+        <a class="cta" href="https://play.google.com/store/apps/details?id=com.lamisaexplicada.app">Google&nbsp;Play</a>
+      </div>
+    </section>
+  </main>
+  <script>
+  (function () {
+    var Q = {"id":"q09","week":"2026-11-30","type":"image","options":["Morado","Rosado","Blanco","Azul celeste"],"images":["op0.jpg","op1.jpg","op2.jpg","op3.jpg"],"template":null,"answer":1,"explanation":"Rosado: Puede usarse, donde se acostumbre, en los domingos Gaudete (III de Adviento) y Lætare (IV Cuaresma).","source":"La Misa Explicada › Colores Litúrgicos y Celebraciones › Los colores litúrgicos","scene":null,"slots":[]};
+    var $ = function (id) { return document.getElementById(id); };
+    var parts = Q.week.split("-").map(Number);
+    if (new Date() < new Date(parts[0], parts[1] - 1, parts[2])) {
+      $("quiz").hidden = true; $("soon").hidden = false; $("promo").hidden = false;
+      $("promoTitle").textContent = "Cada lunes, una pregunta nueva sobre la Misa"; return;
+    }
+    var KEY = "lme_pregunta_" + Q.id;
+    var opts = $("opts");
+    var labels, correct;
+    if (Q.type === "truefalse") { labels = ["Verdadero", "Falso"]; correct = Q.answer === true ? 0 : 1; }
+    else if (Q.type === "fill") { labels = Q.options; correct = Q.options.indexOf(Q.answer); }
+    else { labels = Q.options; correct = typeof Q.answer === "number" ? Q.answer : -1; }
+    var buttons = [];
+    function reveal(picked) {
+      buttons.forEach(function (b, i) {
+        b.disabled = true;
+        var mark = b.querySelector(".mark");
+        if (i === correct) { b.classList.add("ok"); mark.textContent = "Correcta"; if (Q.type === "image") b.querySelector(".lbl").hidden = false; }
+        else if (i === picked) { b.classList.add("bad"); mark.textContent = "Tu respuesta"; }
+      });
+      $("hint").hidden = true;
+      var ok = picked === correct;
+      $("verdict").textContent = ok ? "¡Correcto!" : "Casi… era «" + labels[correct] + "».";
+      $("verdict").style.color = ok ? "var(--ok)" : "var(--accent)";
+      $("expl").textContent = Q.explanation;
+      $("src").textContent = Q.source ? "— " + Q.source : "";
+      $("result").hidden = false; $("promo").hidden = false;
+    }
+    if (Q.type === "order") {
+      Q.options.forEach(function (t) {
+        var d = document.createElement("div"); d.className = "opt"; d.textContent = t; opts.appendChild(d);
+      });
+      return;
+    }
+    if (Q.type === "place") {
+      if (Q.scene) {
+        var sc = document.createElement("div"); sc.className = "scene";
+        var im = document.createElement("img"); im.src = Q.scene; im.alt = ""; sc.appendChild(im);
+        Q.slots.forEach(function (s) { var m = document.createElement("span"); m.textContent = "?"; m.style.left = s.x + "%"; m.style.top = s.y + "%"; sc.appendChild(m); });
+        opts.appendChild(sc);
+      }
+      var l = document.createElement("p"); l.className = "hint"; l.textContent = Q.slots.map(function (s) { return s.label; }).join(" · "); opts.appendChild(l);
+      return;
+    }
+    if (Q.type === "image") opts.className = "opts grid";
+    labels.forEach(function (t, i) {
+      var b = document.createElement("button"); b.type = "button";
+      b.className = Q.type === "image" ? "opt img" : "opt";
+      var badge = document.createElement("span"); badge.className = "badge"; badge.textContent = "ABCDEF"[i] || String(i + 1);
+      b.appendChild(badge);
+      if (Q.type === "image") {
+        var img = document.createElement("img"); img.src = Q.images[i] || ""; img.alt = "Opción " + "ABCDEF"[i]; b.appendChild(img);
+      }
+      var lbl = document.createElement("span"); lbl.className = "lbl"; lbl.textContent = t;
+      if (Q.type === "image") lbl.hidden = true;
+      b.appendChild(lbl);
+      var mark = document.createElement("span"); mark.className = "mark"; b.appendChild(mark);
+      b.addEventListener("click", function () {
+        try { localStorage.setItem(KEY, String(i)); } catch (e) {}
+        reveal(i);
+      });
+      buttons.push(b); opts.appendChild(b);
+    });
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved !== null && buttons[Number(saved)]) reveal(Number(saved));
+  })();
+  </script>
+</body>
+</html>
