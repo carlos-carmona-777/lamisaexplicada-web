@@ -174,7 +174,10 @@ ${hasOwnImage ? `    <img class="hero" src="og.jpg" alt="">\n` : ""}    <div cla
 </html>
 `;
 
-for (const kind of ["art", "grupo", "sm", "santo"]) {
+// `santo/` solo se rehace si está el espejo de Santo a fondo (si no, se
+// conservan las páginas ya publicadas en vez de borrarlas).
+const hayEspejoAFondo = existsSync(join(root, "../SANTO_A_FONDO_PUBLICADO/index.json"));
+for (const kind of ["art", "grupo", "sm", ...(hayEspejoAFondo ? ["santo"] : [])]) {
   rmSync(join(root, kind), { recursive: true, force: true });
 }
 let withImage = 0;
