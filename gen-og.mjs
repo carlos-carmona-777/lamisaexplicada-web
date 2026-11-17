@@ -429,7 +429,11 @@ ${q.type === "truefalse" ? `      <p class="stmt">${esc(q.question)}</p>\n` : ""
     var opts = $("opts");
     var labels, correct;
     if (Q.type === "truefalse") { labels = ["Verdadero", "Falso"]; correct = Q.answer === true ? 0 : 1; }
-    else if (Q.type === "fill") { labels = Q.options; correct = Q.options.indexOf(Q.answer); }
+    else if (Q.type === "fill") {
+      // Alfabéticas, como la app (fillChoices): la correcta suele ir primero.
+      labels = Q.options.slice().sort(function (a, b) { return a.localeCompare(b, "es", { sensitivity: "base" }); });
+      correct = labels.indexOf(Q.answer);
+    }
     else { labels = Q.options; correct = typeof Q.answer === "number" ? Q.answer : -1; }
     var buttons = [];
     function reveal(picked) {
@@ -460,7 +464,7 @@ ${q.type === "truefalse" ? `      <p class="stmt">${esc(q.question)}</p>\n` : ""
         Q.slots.forEach(function (s) { var m = document.createElement("span"); m.textContent = "?"; m.style.left = s.x + "%"; m.style.top = s.y + "%"; sc.appendChild(m); });
         opts.appendChild(sc);
       }
-      var l = document.createElement("p"); l.className = "hint"; l.textContent = Q.slots.map(function (s) { return s.label; }).join(" · "); opts.appendChild(l);
+      var l = document.createElement("p"); l.className = "hint"; l.textContent = Q.slots.map(function (s) { return s.label; }).sort().join(" · "); opts.appendChild(l);
       return;
     }
     if (Q.type === "image") opts.className = "opts grid";
@@ -470,10 +474,11 @@ ${q.type === "truefalse" ? `      <p class="stmt">${esc(q.question)}</p>\n` : ""
       var badge = document.createElement("span"); badge.className = "badge"; badge.textContent = "ABCDEF"[i] || String(i + 1);
       b.appendChild(badge);
       if (Q.type === "image") {
-        var img = document.createElement("img"); img.src = Q.images[i] || ""; img.alt = "Opción " + "ABCDEF"[i]; b.appendChild(img);
+        if (Q.images[i]) { var img = document.createElement("img"); img.src = Q.images[i]; img.alt = "Opción " + "ABCDEF"[i]; b.appendChild(img); }
       }
       var lbl = document.createElement("span"); lbl.className = "lbl"; lbl.textContent = t;
-      if (Q.type === "image") lbl.hidden = true;
+      // Sin foto (falló sips o falta el archivo), el nombre queda visible.
+      if (Q.type === "image" && Q.images[i]) lbl.hidden = true;
       b.appendChild(lbl);
       var mark = document.createElement("span"); mark.className = "mark"; b.appendChild(mark);
       b.addEventListener("click", function () {
@@ -498,6 +503,8 @@ for (const q of preguntas) {
     options: q.type === "image" ? (q.images ?? []).map((f, i) => imagenPregunta(f, dir, `op${i}.jpg`)) : [],
     scene: q.type === "place" ? imagenPregunta(q.scene, dir, "escena.jpg") : null,
   };
+  if (imgs.options.some((x) => !x) || (q.type === "place" && !imgs.scene))
+    console.warn(`⚠️  /pregunta/${q.id}: falta alguna imagen (se muestra el nombre en su lugar)`);
   writeFileSync(join(dir, "index.html"), preguntaPage(q, imgs));
 }
 // /pregunta/: brinca a la de esta semana (o a la más reciente ya abierta).
